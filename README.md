@@ -18,18 +18,35 @@ Inspiron 3520
 Ademas de servir como entorno de prácitca, este reporsitorio funcionara como una bitácora técnica, donde documento el avance y sus configuraciones realizadas, problemas encontrados, soluciones y aprendizaje adquirido durante todo el proceso.
 
 ## Servicios planeados
-Ubuntu Server
-      │
-      ├── Docker
-      │     ├── Nextcloud
-      │     ├── Minecraft
-      │     ├── Nginx/Caddy
-      │     └── otros servicios
-      │
-      ├── SSH
-      ├── Samba/NFS
-      ├── WireGuard
-      └── herramientas de laboratorio
+
+```
+Dell Inspiron 3520
+└── Ubuntu Server
+    │
+    ├── Sistema (host)
+    │   ├── SSH (solo llaves)
+    │   ├── UFW + Fail2ban
+    │   ├── unattended-upgrades
+    │   ├── WireGuard
+    │   ├── Samba
+    │   └── Backups (restic → disco externo)
+    │
+    └── Docker (docker compose)
+        ├── Caddy (proxy + HTTPS)
+        ├── Nextcloud
+        │   ├── MariaDB
+        │   └── Redis
+        ├── Uptime Kuma
+        ├── Gitea (fase 2)
+        ├── AdGuard Home (fase 2)
+        ├── Mis páginas
+        │   ├── sitios estáticos
+        │   └── apps Java (Spring Boot)
+        ├── Lab de ciberseguridad (red aislada)
+        │   ├── DVWA
+        │   └── Juice Shop
+        └── Minecraft (al final, opcional)
+```
 
 ## Estado del proyecto:
 Estado: En construcción
@@ -46,13 +63,12 @@ Cada sección de la documentación intentará explicar qué se hizo, por qué se
 Toda la documentación del proyecto ser agregara aqui:
 - [Instalación de Ubuntu Server](./Instalacion-ubuntu-server.md)
 - [Configuración de red](./Configuracion_red.md)
+- [Configuración de llaves de SSH](./ssh-solo-llaves.md)
 
 ## Roadmap
 
 - [x] Instalar Ubuntu Server
 - [x] Configurar red
 - [x] Configurar acceso SSH
-- [ ] Instalar Docker
-- [ ] Implementar Nextcloud
-- [ ] Implementar servidor de Minecraft
+- [x] Configurar llaves de acceso en SSH
 - [ ] ...

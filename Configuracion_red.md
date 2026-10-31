@@ -19,7 +19,7 @@ El comando `ip link` me ayudo a ver si la interfaz fisica y logica estaba activa
     ip link
 ```
 
-![Comando ip a e ip link](/home-lab/img/Configuracion_red/comando_IP_A_e_IP_LINK.jPeg)
+![Comando ip a e ip link](img/Configuracion_red/comando_IP_A_e_IP_LINK.jPeg)
 
 En este caso se pude observar que el servidor cuenta con con una direccion IPv6 "*2006:...*" ademas me ayudo a ver que la interfaz de red esta activa "*state up*" y "*lower up*", pero no logre encontrar mi direccion IPv4.
 
@@ -34,7 +34,7 @@ Pero aquí pasa algo curioso al ejecutar `ping -c 4 google.com`, la prueba fue e
     ping -c 4 google.com
 ```
 
-![Comandos ip route, ping -c 4 8.8.8.8 y ping -c 4 google.com](/home-lab/img/Configuracion_red/comando_ip_route_ping_-c_48888_y_ping_-c_4_google.jpeg)
+![Comandos ip route, ping -c 4 8.8.8.8 y ping -c 4 google.com](img/Configuracion_red/comando_ip_route_ping_-c_48888_y_ping_-c_4_google.jpeg)
 
 #### Paso 3
 Con el comando `resolvectl status` revise la configuración actual que tiene mi servidor de Ubuntu, todo parece estar bien no encontré ningún error.
@@ -43,7 +43,7 @@ Con el comando `resolvectl status` revise la configuración actual que tiene mi 
     resolvectl status
 ```
 
-![Comando resolvectl status](/home-lab/img/Configuracion_red/comando_resolvectl_status.jpg)
+![Comando resolvectl status](img/Configuracion_red/comando_resolvectl_status.jpg)
 
 #### Paso 4
 al querer ver las direcciones IP (IPv4 e IPv6) que mi servidor tenia con el comando `hostname -I` solo obtuve como respuesta la dirección IPv6, no mostró la dirección IPv4
@@ -52,7 +52,7 @@ al querer ver las direcciones IP (IPv4 e IPv6) que mi servidor tenia con el coma
     hostname -I
 ```
 
-![Comando hostname -I](/home-lab/img/Configuracion_red/comando_hostname_-I.jpg)
+![Comando hostname -I](img/Configuracion_red/comando_hostname_-I.jpg)
 
 #### Paso 5
 Con el comando `ip -4 addr show enp9s0` comprobé que la interfaz enp9s0 no tenía una dirección IPv4 asignada.
@@ -61,7 +61,7 @@ Con el comando `ip -4 addr show enp9s0` comprobé que la interfaz enp9s0 no ten�
     ip -4 addr show enp9s0
 ```
 
-![Comando ip -4 addr show enp9s0](/home-lab/img/Configuracion_red/comando_ip_-4_addr_show_enp9s0.jpg)
+![Comando ip -4 addr show enp9s0](img/Configuracion_red/comando_ip_-4_addr_show_enp9s0.jpg)
 
 #### Paso 6
 Me asegure de que la interfaz estuviera activa y funcional con el comando `networkctl status enp9s0`, en la que comprobé que si estaba bien, era la razon por la que podia hacer un ping al servidor de google y obtener una respuesta con la IPv6, pero tambien comprobé que el US no tenia una dirección IPv4, ya que solo salia la dirección IPv6
@@ -70,7 +70,7 @@ Me asegure de que la interfaz estuviera activa y funcional con el comando `netwo
     networkctl status enp9s0
 ```
 
-![Comando networkctl status enp9s0](/home-lab/img/Configuracion_red/comando_networkctl_status_enp9s0.jpg)
+![Comando networkctl status enp9s0](img/Configuracion_red/comando_networkctl_status_enp9s0.jpg)
 
 #### Paso 7 
 Con el siguiente comando `sudo cat /etc/netplan/00-installer-config.yaml` encontré el porque no tenia una direccion IPv4 y es que no tenia el `DHCP`, que es lo que me asignaria mi IPv4 de manera automatica.
@@ -79,7 +79,7 @@ Con el siguiente comando `sudo cat /etc/netplan/00-installer-config.yaml` encont
 
 `dhcp4: true` indica que la interfaz de red debe utilizar DHCP para obtener automáticamente una configuración IPv4, incluyendo una dirección IP, puerta de enlace y otros parámetros proporcionados por el servidor DHCP de la red.
 
-![Comando sudo cat /etc/netplan/00-installer-config.yaml](/home-lab/img/Configuracion_red/comando_sudo_cat_-etc-netplan-00-installer-config_yaml.jpg)
+![Comando sudo cat /etc/netplan/00-installer-config.yaml](img/Configuracion_red/comando_sudo_cat_-etc-netplan-00-installer-config_yaml.jpg)
 
 > [!NOTE]
 > Antes de haber editado el archivo `...-config.yaml` se guardo una copia de respaldo por si llegara haber un problema regresar a esa configuración.
@@ -101,7 +101,7 @@ Se agrego el `dhcp4: true` a la configuración del archivo `sudo cat /etc/netpla
     dhcp4: true
 ```
 
-![Se agrego dhcp4: true](/home-lab/img/Configuracion_red/dhcp4_true.jpg)
+![Se agrego dhcp4: true](img/Configuracion_red/dhcp4_true.jpg)
 
 Para poder obtener la interfaz IPv4. Una vez agregado presione `Ctrl + o` para guardar lo que agregue y `Ctrl + x` para salir del editor del archivo.
 Posteriormente solo se aplico y guardo la configuración:
@@ -118,33 +118,33 @@ Se realizaron con exito los siguientes comandos:
 ```
     ip route
 ```
-![Comando ip route](/home-lab/img/Configuracion_red/comando_ip_route_funcional.png)
+![Comando ip route](img/Configuracion_red/comando_ip_route_funcional.png)
 
 **2.** Volvi a verificar el comando `hostname -I`
  ```
     hostname -I
 ```
 
-![El comando hostname -i funciona correctamente](/home-lab/img/Configuracion_red/comando_hostname_-I_funcional.png)
+![El comando hostname -i funciona correctamente](img/Configuracion_red/comando_hostname_-I_funcional.png)
 **Muestra la direccion IPv4 (izquierda) e IPv6 (derecha)**
 
 **3.** Se comprueba el resultado exitoso de `ip -4 addr show enp9s0`
 ```
     ip -4 addr show enp9s0
 ```
-![Comando ip -4 addr show enp9s0](/home-lab/img/Configuracion_red/Comando_ip_-4_addr_show_enp9s0_funcional.png)
+![Comando ip -4 addr show enp9s0](img/Configuracion_red/Comando_ip_-4_addr_show_enp9s0_funcional.png)
 
 **4.** Se realizo una prueba de conectividad:
 ```
     ping -c 4 8.8.8.8
 ```
-![Comando ip route](/home-lab/img/Configuracion_red/comando_ping_-c_4_8_8_8_8_funcional.png)
+![Comando ip route](img/Configuracion_red/comando_ping_-c_4_8_8_8_8_funcional.png)
 
 **5.** Se comprobo el correcto funcionamiento de DNS
 ```
     ping -c 4 google.com
 ```
-![Comando ip route](/home-lab/img/Configuracion_red/comando_ping_-c_4_google_com_funcional.png)
+![Comando ip route](img/Configuracion_red/comando_ping_-c_4_google_com_funcional.png)
 
 ## Lo que aprendi
 - Tener preparado el cable ethernet para hacer la configuracion durante la instalación.
